@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>What's My Location? - Longitude, Latitude and nearby points of interest</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="What's My Location is a quick way to discover your longitude and latitude, and other info about your geographical position, anywhere in the world. All you need is a modern browser. Add WML as a shortcut to the homescreen of your smartphone!">
+    <meta name="author" content="Ed Shelley 2012">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-19619576-3']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+
+          <a class="brand" href="#">What's My Location</a>
+          <div class="nav-collapse">
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1>Your Location</h1>
+      <br><br>
+      <h3 id='lon'>Longitude: </h3>
+      <h3 id='lat'>Latitude: </h3>
+      <h3 id='city'>Determining city... </h3>
+      <br/>
+    </div>
+
+    <div id="PlacesContainer" class="container" >
+      <p><h2 id="LookingFor">Finding nearby places...</h2></p>
+
+      <ul id="NearbyList" class="nav nav-list" style="display:none">
+        <li class="nav-header">Nearby places:</li>
+      </ul>
+      <br/>
+    </div>
+
+      <div class='modal-footer' style="text-align:'left'">
+      <h1>About WML</h1>
+      <!-- google_ad_section_start --><p>WML is a quick way to discover your longitude and latitude, anywhere in the world - all you need is a modern browser. Add this as a shortcut to the homescreen of your smartphone!</p>
+      <h3>Unexpected location results?</h3>
+      <p>We're currently working on improving the accuracy of results, and the information provided with them. Any suggestions: <a href="mailto:mail@whatsmylocation.net">email</a>.</p>
+      <!-- google_ad_section_end -->
+      </div>
+      <br><br>
+      <p/>
+        <script type="text/javascript"><!--
+          google_ad_client = "ca-pub-9900788801818440";
+          /* WML narrow */
+          google_ad_slot = "5481904542";
+          google_ad_width = 300;
+          google_ad_height = 250;
+          //-->
+        </script>
+
+        <script type="text/javascript"
+        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+        </script>
+      
+      </p>
+
+    
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCmi8h35QlPspyAF9g1DXpintSldOkQDq0&sensor=true">
+    </script>
+
+    <script type="text/javascript">
+          function GeoCode(latlng) {
+
+          //This is declaring the 'Geocoder' variable
+          var geocoder = new google.maps.Geocoder();
+
+          // This is making the Geocode request
+          geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+
+            if(status !== google.maps.GeocoderStatus.OK)
+            {
+                alert(status);
+            }
+            // This is checking to see if the Geoeode Status is OK before proceeding    
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                  // Creating a new marker and adding it to the map
+                  var address = (results[0].formatted_address);
+                  var components = (results[0].address_components);
+
+                  if(components.length >= 4)
+                  {
+                    //This is placing the returned address in the 'Address' field on the HTML form  
+                  document.getElementById('city').innerHTML = "You're near to the beautiful <a href='http://www.google.com/search?sourceid=navclient&gfns=1&q=" + components[2].long_name + "%20" + components[3].long_name + "'>" + components[2].long_name + ", " + components[3].long_name + "</a>";
+
+                  
+
+                  GetLocations(latlng.lat(), latlng.lng(), components[2].long_name)
+
+                  } else
+                  {
+                    document.getElementById('city').innerHTML = "You seem to be at: " + address;
+                  }
+                } 
+            } 
+        });
+      }
+
+      function GetLocations(lat, lng, city)
+      {
+          $.getJSON('https://api.foursquare.com/v2/venues/search?ll=' + lat + ',' + lng + '&limit=10&client_id=GLVIDVQYR2QGJL1UOXATRQSIVZUF4AISATFE1VQBKFEIX4LM&client_secret=5B2TUYGOVCAWN5N0DODCWB5HIJRW2X5GG4Y1WHU1CLC0MT3X&v=20120916',
+              function(data) {
+                  $.each(data.response.venues, function(i,venues){
+
+                    if(venues.url != null)
+                    {
+                      //link to the URL of the venue
+                      content = '<li><a href="' + venues.url + '">' + venues.name + '</a></li>';
+                    } else
+                    {
+                      //no URL - link to google search for the venue
+                      content = '<li><a href="' + 'http://www.google.com/search?sourceid=navclient&gfns=1&q=' + venues.name + ', ' + city + '">' + venues.name + '</a></li>';
+                    }
+
+                    // see if we can add a phone number for the venue:
+                    /**if(venues.contact.phone != null)
+                    {
+                      var phoneInfo = '<span class="label label-info">' + venues.contact.phone + '</span></li>';
+                      $(phoneInfo).appendTo(content);
+                    } else
+                    {
+                      $('</li>').appendTo(content);
+                    }
+                    **/
+
+                    $(content).appendTo("ul#NearbyList");
+
+                    document.getElementById('LookingFor').innerHTML = "Looking for stuff in " + city + "?";
+                    $(NearbyList).fadeIn('slow', function() {});
+                    //console.log(content);
+                 });
+          });
+      }
+
+    </script>
+
+    <script type="text/javascript">
+
+    if (navigator.geolocation) {  
+      navigator.geolocation.getCurrentPosition(function(position){
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+        document.getElementById('lat').innerHTML = 'Longitude: ' + lat;
+        document.getElementById('lon').innerHTML = 'Latitude: ' + lon;
+        var latlng = new google.maps.LatLng(lat, lon);
+        GeoCode(latlng);
+      });
+    } 
+
+    </script>
+
+  </body>
+</html>
