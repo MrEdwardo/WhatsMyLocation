@@ -28,7 +28,6 @@
     <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
 
     <script type="text/javascript">
-
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-19619576-3']);
       _gaq.push(['_trackPageview']);
@@ -38,7 +37,6 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
-
     </script>
   </head>
 
@@ -57,7 +55,11 @@
 
     <div class="container">
       <h1>Your Location</h1>
-      <br><br>
+      <br>
+      <div id="BrowserWarning" class="alert" style="display:none">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Warning! </strong>Looks like your browser doesn't have geolocation enabled.
+      </div>
       <h3 id='lon'>Longitude: </h3>
       <h3 id='lat'>Latitude: </h3>
       <h3 id='city'>Determining city... </h3>
@@ -121,10 +123,11 @@
           // This is making the Geocode request
           geocoder.geocode({ 'latLng': latlng }, function (results, status) {
 
-            if(status !== google.maps.GeocoderStatus.OK)
+            if(!navigator.geolocation || status !== google.maps.GeocoderStatus.OK)
             {
-                alert(status);
+              $(BrowserWarning).show();
             }
+
             // This is checking to see if the Geoeode Status is OK before proceeding    
             if (status == google.maps.GeocoderStatus.OK) {
                 if (results[0]) {
@@ -199,7 +202,8 @@
         var latlng = new google.maps.LatLng(lat, lon);
         GeoCode(latlng);
       });
-    } 
+    } else
+    { $(BrowserWarning).show(); } 
 
     </script>
 
