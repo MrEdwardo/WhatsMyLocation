@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>What's My Location? - Longitude, Latitude and nearby points of interest</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="What's My Location is a quick way to discover your longitude and latitude, and other info about your geographical position, anywhere in the world. All you need is a modern browser. Add WML as a shortcut to the homescreen of your smartphone!">
+    <meta name="description" content="What's My Location is a quick way to discover your longitude and latitude and other info about your geographical position, anywhere in the world; All you need is a modern browser. Add WML as a shortcut to the homescreen of your smartphone!">
     <meta name="author" content="Ed Shelley 2012">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <!-- optimized for mobile, zoom/scaling disabled -->
@@ -15,8 +15,6 @@
     <link rel="apple-touch-icon" sizes="72x72" href="img/touch-icon-iPad.png" />
     <link rel="apple-touch-icon" sizes="114x114" href="img/touch-icon-iPhoneRetina.png" />
     <link rel="apple-touch-icon" sizes="144x144" href="img/touch-icon-iPad3.png" />
-
-
 
     <!-- iPhone SPLASHSCREEN-->
     <link href="img/touch-startup-generic.png" media="(device-width: 320px)" rel="apple-touch-startup-image">
@@ -29,17 +27,6 @@
       }
     </style>
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
-
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
 
     <script type="text/javascript">
       var _gaq = _gaq || [];
@@ -55,53 +42,57 @@
   </head>
 
   <body>
-
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-
-          <a class="brand" href="#">What's My Location</a>
+          <a class="brand" href="#">What's my location? <i class="icon-map-marker icon-white"></i></a>
           <div class="nav-collapse">
-          </div><!--/.nav-collapse -->
+          </div>
         </div>
       </div>
     </div>
 
     <div class="container">
-      <h1>Your Location</h1>
+
+      <div id="infoBar" class="alert alert-info alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <i class="icon-info-sign"></i>
+        WML is a quick way to discover your longitude and latitude, anywhere in the world - all you need is a modern browser.
+      </div>
+
+      <h2><a class="btn btn-small">Your Location</h2>
+
       <br>
       <div id="BrowserWarning" class="alert" style="display:none">
         <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>Warning! </strong>Looks like your browser doesn't have geolocation enabled.
       </div>
-      <h3 id='lon'>Longitude: </h3>
-      <h3 id='lat'>Latitude: </h3>
+      <h3 id='lon'/>
+      <h3 id='lat'/>
       <h3 id='city'>Determining city... </h3>
       <br/>
-    </div>
+    
 
     <div id="PlacesContainer" class="container" >
-      <p><h2 id="LookingFor">Finding nearby places...</h2></p>
+      <p><h2 id="LookingFor">Finding places...</h2></p>
 
       <ul id="NearbyList" class="nav nav-list" style="display:none">
-        <li class="nav-header">Nearby places:</li>
+        <li class="nav-header">Near to you:</li>
       </ul>
       <br/>
     </div>
 
-      <div class='modal-footer'>
-        <div style="text-align:left">
-      <h2>About WML</h2>
-      <!-- google_ad_section_start --><p>WML is a quick way to discover your longitude and latitude, anywhere in the world - all you need is a modern browser. Add this as a shortcut to the homescreen of your smartphone!</p>
-      <h3>Unexpected location results?</h3>
-      <p>We're currently working on improving the accuracy of results, and the information provided with them. Any suggestions: <a href="mailto:mail@whatsmylocation.net">email</a>.</p>
-      <h3>Latest updates</h3>
-      <p><span class="label label-success">New!</span> iOS device home screen icons and splash screen images.</p>
-      <p>Basic functionality for showing nearby venues. Click a venue name to find its website. More coming soon.</p>
-      <!-- google_ad_section_end -->
+    <div class='well well-small'>
+      <div style="text-align:left">
+        <h3>Unexpected location results?</h3>
+        <p>We're currently working on improving the accuracy of results, and the information provided with them. Any suggestions: <a href="mailto:mail@whatsmylocation.net">email</a>.</p>
+        <h3>Latest updates</h3>
+        <p><span class="label label-success">New!</span> iOS device home screen icons and splash screen images.</p>
+        <p>Basic functionality for showing nearby venues. Click a venue name to find its website. More coming soon.</p>
       </div>
     </div>
-      <br><br>
+
+      <br/><br/>
       <p/>
         <script type="text/javascript"><!--
           google_ad_client = "ca-pub-9900788801818440";
@@ -115,22 +106,23 @@
         <script type="text/javascript"
         src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
         </script>
-      
       </p>
-
-    
+    </div><!--CONTAINER -->
 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/spin.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCmi8h35QlPspyAF9g1DXpintSldOkQDq0&sensor=true">
     </script>
 
     <script type="text/javascript">
           function GeoCode(latlng) {
+
+          LoadingOn('LookingFor'); //turn loading animation on
 
           //This is declaring the 'Geocoder' variable
           var geocoder = new google.maps.Geocoder();
@@ -145,82 +137,124 @@
 
             // This is checking to see if the Geoeode Status is OK before proceeding    
             if (status == google.maps.GeocoderStatus.OK) {
-                if (results[0]) {
-                  // Creating a new marker and adding it to the map
-                  var address = (results[0].formatted_address);
-                  var components = (results[0].address_components);
+              if (results[0]) {
+                // Creating a new marker and adding it to the map
+                var address = (results[0].formatted_address);
+                var components = (results[0].address_components);
 
-                  if(components.length >= 4)
-                  {
-                    //This is placing the returned address in the 'Address' field on the HTML form  
-                  document.getElementById('city').innerHTML = "You're near to the beautiful <a href='http://www.google.com/search?sourceid=navclient&gfns=1&q=" + components[2].long_name + "%20" + components[3].long_name + "'>" + components[2].long_name + ", " + components[3].long_name + "</a>";
+                if(components.length >= 4)
+                {
+                  //This is placing the returned address in the 'Address' field on the HTML form  
+                document.getElementById('city').innerHTML = "You're near to the beautiful <a href='http://www.google.com/search?sourceid=navclient&gfns=1&q=" + components[2].long_name + "%20" + components[3].long_name + "'>" + components[2].long_name + ", " + components[3].long_name + "</a>";
 
-                  
+                
 
-                  GetLocations(latlng.lat(), latlng.lng(), components[2].long_name)
+                GetLocations(latlng.lat(), latlng.lng(), components[2].long_name)
 
-                  } else
-                  {
-                    document.getElementById('city').innerHTML = "You seem to be at: " + address;
-                  }
-                } 
-            } 
+                } else
+                {
+                  document.getElementById('city').innerHTML = "You seem to be at: " + address;
+                }
+              } 
+          } 
         });
       }
 
       function GetLocations(lat, lng, city)
       {
-          $.getJSON('https://api.foursquare.com/v2/venues/search?ll=' + lat + ',' + lng + '&limit=10&client_id=GLVIDVQYR2QGJL1UOXATRQSIVZUF4AISATFE1VQBKFEIX4LM&client_secret=5B2TUYGOVCAWN5N0DODCWB5HIJRW2X5GG4Y1WHU1CLC0MT3X&v=20120916',
-              function(data) {
-                  $.each(data.response.venues, function(i,venues){
+        $.getJSON('https://api.foursquare.com/v2/venues/search?ll=' + lat + ',' + lng + '&limit=10&client_id=GLVIDVQYR2QGJL1UOXATRQSIVZUF4AISATFE1VQBKFEIX4LM&client_secret=5B2TUYGOVCAWN5N0DODCWB5HIJRW2X5GG4Y1WHU1CLC0MT3X&v=20120916',
+            function(data) {
+              $.each(data.response.venues, function(i,venues){
+                if(venues.url != null)
+                {
+                  //link to the URL of the venue
+                  content = '<li><a href="' + venues.url + '">' + venues.name + '</a></li>';
+                } else
+                {
+                  //no URL - link to google search for the venue
+                  content = '<li><a href="' + 'http://www.google.com/search?sourceid=navclient&gfns=1&q=' + venues.name + ', ' + city + '">' + venues.name + '</a></li>';
+                }
 
-                    if(venues.url != null)
-                    {
-                      //link to the URL of the venue
-                      content = '<li><a href="' + venues.url + '">' + venues.name + '</a></li>';
-                    } else
-                    {
-                      //no URL - link to google search for the venue
-                      content = '<li><a href="' + 'http://www.google.com/search?sourceid=navclient&gfns=1&q=' + venues.name + ', ' + city + '">' + venues.name + '</a></li>';
-                    }
+                // see if we can add a phone number for the venue:
+                /**if(venues.contact.phone != null)
+                {
+                  var phoneInfo = '<span class="label label-info">' + venues.contact.phone + '</span></li>';
+                  $(phoneInfo).appendTo(content);
+                } else
+                {
+                  $('</li>').appendTo(content);
+                }
+                **/
 
-                    // see if we can add a phone number for the venue:
-                    /**if(venues.contact.phone != null)
-                    {
-                      var phoneInfo = '<span class="label label-info">' + venues.contact.phone + '</span></li>';
-                      $(phoneInfo).appendTo(content);
-                    } else
-                    {
-                      $('</li>').appendTo(content);
-                    }
-                    **/
-
-                    $(content).appendTo("ul#NearbyList");
-
-                    document.getElementById('LookingFor').innerHTML = "Looking for stuff in " + city + "?";
-                    $(NearbyList).fadeIn('slow', function() {});
-                    //console.log(content);
-                 });
-          });
+                $(content).appendTo("ul#NearbyList");
+                document.getElementById('LookingFor').innerHTML = "Looking for stuff in " + city + "?";
+                $(NearbyList).fadeIn('slow', function() {});
+                //console.log(content);
+             });
+        });
       }
+
+      function LoadingOn(elementName)
+      {
+        var opts = {
+          lines: 10, // The number of lines to draw
+          length: 5, // The length of each line
+          width: 3, // The line thickness
+          radius: 5, // The radius of the inner circle
+          corners: 1, // Corner roundness (0..1)
+          rotate: 0, // The rotation offset
+          color: '#000', // #rgb or #rrggbb
+          speed: 1, // Rounds per second
+          trail: 60, // Afterglow percentage
+          shadow: false, // Whether to render a shadow
+          hwaccel: false, // Whether to use hardware acceleration
+          className: 'spinner', // The CSS class to assign to the spinner
+          zIndex: 2e9, // The z-index (defaults to 2000000000)
+          top: 'auto', // Top position relative to parent in px
+          left: 'auto' // Left position relative to parent in px
+        };
+        var target = document.getElementById(elementName);
+        var spinner = new Spinner(opts).spin(target);
+      }
+
+      function LoadingOff(elementName)
+      {
+        var opts = {
+          lines: 10, // The number of lines to draw
+          length: 5, // The length of each line
+          width: 3, // The line thickness
+          radius: 5, // The radius of the inner circle
+          corners: 1, // Corner roundness (0..1)
+          rotate: 0, // The rotation offset
+          color: '#000', // #rgb or #rrggbb
+          speed: 1, // Rounds per second
+          trail: 60, // Afterglow percentage
+          shadow: false, // Whether to render a shadow
+          hwaccel: false, // Whether to use hardware acceleration
+          className: 'spinner', // The CSS class to assign to the spinner
+          zIndex: 2e9, // The z-index (defaults to 2000000000)
+          top: 'auto', // Top position relative to parent in px
+          left: 'auto' // Left position relative to parent in px
+        };
+        var target = document.getElementById(elementName);
+        var spinner = new Spinner(opts).spin(target);
+      }
+
 
     </script>
 
     <script type="text/javascript">
-
-    if (navigator.geolocation) {  
-      navigator.geolocation.getCurrentPosition(function(position){
-        var lat = position.coords.latitude;
-        var lon = position.coords.longitude;
-        document.getElementById('lat').innerHTML = 'Longitude: ' + lat;
-        document.getElementById('lon').innerHTML = 'Latitude: ' + lon;
-        var latlng = new google.maps.LatLng(lat, lon);
-        GeoCode(latlng);
-      });
-    } else
-    { $(BrowserWarning).show(); } 
-
+      if (navigator.geolocation) {  
+        navigator.geolocation.getCurrentPosition(function(position){
+          var lat = position.coords.latitude;
+          var lon = position.coords.longitude;
+          document.getElementById('lat').innerHTML = 'Your <b>latitude</b> is ' + lat;
+          document.getElementById('lon').innerHTML = 'Your <b>longitude</b> is ' + lon;
+          var latlng = new google.maps.LatLng(lat, lon);
+          GeoCode(latlng);
+        });
+      } else
+      { $(BrowserWarning).show(); } 
     </script>
-
   </body>
 </html>
