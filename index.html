@@ -6,33 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="What's My Location is a quick way to discover your longitude and latitude and other info about your geographical position, anywhere in the world; All you need is a modern browser. Add WML as a shortcut to the homescreen of your smartphone!">
     <meta name="author" content="Ed Shelley 2012">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+    
     <!-- optimized for mobile, zoom/scaling disabled -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
 
-    <!-- Apple touch icons -->
+    <!-- Apple device icons & splash screen-->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="apple-touch-icon" sizes="57x57" href="img/touch-icon-iPhone.png" />
     <link rel="apple-touch-icon" sizes="72x72" href="img/touch-icon-iPad.png" />
     <link rel="apple-touch-icon" sizes="114x114" href="img/touch-icon-iPhoneRetina.png" />
     <link rel="apple-touch-icon" sizes="144x144" href="img/touch-icon-iPad3.png" />
-
-    <!-- iPhone SPLASHSCREEN-->
     <link href="img/touch-startup-generic.png" media="(device-width: 320px)" rel="apple-touch-startup-image">
 
-    <!-- Le styles -->
+    <!-- Stylesheets -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
 
+    <!-- Google Analytics JS -->
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-19619576-3']);
       _gaq.push(['_trackPageview']);
-
       (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
@@ -94,6 +94,7 @@
 
       <br/><br/>
       <p/>
+      <!-- Google Adsense -->
         <script type="text/javascript"><!--
           google_ad_client = "ca-pub-9900788801818440";
           /* WML narrow */
@@ -102,35 +103,20 @@
           google_ad_height = 250;
           //-->
         </script>
-
         <script type="text/javascript"
         src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
         </script>
       </p>
-    </div><!--CONTAINER -->
+    </div><!-- Container -->
 
     <!-- JAVASCRIPT LIBRARIES ================================================== -->
     <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/wml.js"></script>
     <script type="text/javascript" src="js/spin.min.js"></script>
     <script type="text/javascript" src="js/backbone-min.js"></script>
     <script type="text/javascript" src="js/icanhaz.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCmi8h35QlPspyAF9g1DXpintSldOkQDq0&sensor=true"></script>
-
-    <script type="text/javascript">
-      if (navigator.geolocation) {  
-        navigator.geolocation.getCurrentPosition(function(position){
-          var lat = position.coords.latitude;
-          var lon = position.coords.longitude;
-          document.getElementById('lat').innerHTML = 'Latitude: ' + lat;
-          document.getElementById('lon').innerHTML = 'Longitude: ' + lon;
-          var latlng = new google.maps.LatLng(lat, lon);
-          GeoCode(latlng);
-        });
-      } else
-      { $(BrowserWarning).show(); } 
-    </script>
+    <script type="text/javascript" src="js/wml.js"></script>
   </body>
 </html>
