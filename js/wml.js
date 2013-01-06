@@ -1,7 +1,6 @@
 // wml.js - contains all WML-specific Javascript.
 if(navigator.geolocation) {
 
-  CreateLocation();
   navigator.geolocation.getCurrentPosition(function(position) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
@@ -148,8 +147,4 @@ function LoadingOff(elementName) {
   };
   var target = document.getElementById(elementName);
   var spinner = new Spinner(opts).spin(target);
-}
-
-function CreateLocation() {
-  var Movie = Backbone.Model.extend({});
 }
