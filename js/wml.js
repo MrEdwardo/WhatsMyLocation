@@ -1,4 +1,10 @@
 // wml.js - contains all WML-specific Javascript.
+
+$(document).ready(function() {
+  $('#groupon-banner-uk').hide();
+  $('#groupon-banner-us').hide();
+});
+
 if(navigator.geolocation) {
 
   navigator.geolocation.getCurrentPosition(function(position) {
@@ -27,15 +33,17 @@ function GeoCode(latlng) {
     if(!navigator.geolocation || status !== google.maps.GeocoderStatus.OK) {
       $(BrowserWarning).show();
     }
-    // This is checking to see if the Geoeode Status is OK before proceeding    
+    // This is checking to see if the Geoeode Status is OK before proceeding
     if(status == google.maps.GeocoderStatus.OK) {
       if(results[0]) {
         // Creating a new marker and adding it to the map
         var address = (results[0].formatted_address);
         var components = (results[0].address_components);
 
+        displayBannerForCountry(results);
+
         if(components.length >= 4) {
-          //This is placing the returned address in the 'Address' field on the HTML form  
+          //This is placing the returned address in the 'Address' field on the HTML form
           document.getElementById('city').innerHTML = "You're near to the beautiful <a href='http://www.google.com/search?sourceid=navclient&gfns=1&q=" + components[2].long_name + "%20" + components[3].long_name + "'>" + components[2].long_name + ", " + components[3].long_name + "</a>";
           GetLocations(latlng.lat(), latlng.lng(), components[2].long_name)
 
@@ -45,6 +53,27 @@ function GeoCode(latlng) {
       }
     }
   });
+}
+
+function displayBannerForCountry(results)
+{
+  for(var x in results)
+  {
+    if(results[x].types[0] === "country") {
+      //this is the country value
+      var countryValue = results[x].formatted_address;
+
+      if (countryValue.toUpperCase() === "UNITED KINGDOM") {
+        //display Groupon UK banner:
+        $('#groupon-banner-uk').show();
+        $('#groupon-banner-us').hide();
+
+      } else { //assume US for now:
+        $('#groupon-banner-us').show();
+        $('#groupon-banner-uk').hide();
+      }
+    }
+  }
 }
 
 function GetLocations(lat, lng, city) {
